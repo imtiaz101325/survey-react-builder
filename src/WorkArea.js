@@ -1,51 +1,29 @@
 import React from 'react';
 import { Button } from 'reactstrap';
-import { Model, Survey } from "survey-react";
 
-const WorkArea = () => {
+import EditableSurvey from './EditableSurvey';
 
-  const surveyJSON = {
-      showNavigationButtons: false,
-      pages : [
-        {
-            name: "page1",
-            questions: [
-                {
-                    type: "text",
-                    name: "question1"
-                }
-            ]
-        }, {
-            name: "page2",
-            questions: [
-                {
-                    type: "text",
-                    name: "question1"
-                }
-            ]
-        }
-      ]
-  }
-
-  const surveyBuilder = () => {
-    return (
-      <div className="survey-entry-wrapper" >
-        <Survey model={new Model(surveyJSON)} />
-        <Button color="secondary" size="sm" >Edit</Button>
-        <Button color="danger" size="sm" >Delete</Button>
-      </div>
-    )
-  }
-
-  let componentGroup = [surveyBuilder(), surveyBuilder()];
-
+const WorkArea = ({ models, handleAddModel }) => {
   return (
-    <div>
-      {componentGroup}
-      <Button color="primary"
-        >Add</Button>
-    </div>
-  )
+        <div>
+          {
+            models.map(
+              (json) => <EditableSurvey
+                            modelJSON={json}  />
+            )
+          }
+          <Button color="primary"
+                  onClick={
+                    () => handleAddModel()
+                  }
+                  onMouseOver={
+                    () => console.log("wow")
+                  }
+                  onMouseLeave={
+                    () => console.log("so cool")
+                  } >Add</Button>
+        </div>
+      )
 }
 
 export default WorkArea;

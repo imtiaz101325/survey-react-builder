@@ -7,13 +7,21 @@
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
+    "normalizr": "^3.1.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
     "reactstrap": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.8.1",
+    "redux-search": "^2.3.2",
+    "redux-thunk": "^2.2.0",
+    "redux-undo": "beta",
+    "reselect": "^2.5.4",
     "survey-react": "^0.11.0"
   },
   "scripts": {
