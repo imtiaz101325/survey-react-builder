@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import WorkAreaContainer from './WorkAreaContainer';
+import WorkAreaContainer from '../containers/WorkAreaContainer';
 
 import './App.css';
 

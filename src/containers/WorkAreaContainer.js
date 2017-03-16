@@ -1,25 +1,24 @@
 import { connect } from 'react-redux';
 
-import { addSurvey } from './addSurvey';
+import addButton, { addSingleInput, toggleAddButtons } from '../modules/AddSurvey';
 
-import WorkArea from './WorkArea';
+import WorkArea from '../components/WorkArea';
 
-const randomFun = (models) => {
-  return models;
-}
+const randomFun = (models) => models;
+const getButtonState = (state) => state;
 
 const mapStateToProps = (state) => {
   return {
-    models: randomFun(state.editor)
+    models: randomFun(state.addButton.editor),
+    showButtons: getButtonState(state.addButton.showButtons),
+    surveyOptions: ['input', 'checkbox']
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleAddModel: () => {
-      dispatch({
-        type: 'ADD_SINGLE_INPUT',
-        model: {
+    addModel: () => {
+      dispatch(addSingleInput({
                       showNavigationButtons: false,
                       pages : [
                         {
@@ -32,8 +31,10 @@ const mapDispatchToProps = (dispatch) => {
                             ]
                         }
                       ]
-                  }
-      })
+                  }))
+    },
+    toggleButtons: (event) => {
+      dispatch(toggleAddButtons(event))
     }
   }
 }
