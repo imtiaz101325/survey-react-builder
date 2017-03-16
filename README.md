@@ -1,5 +1,8 @@
 # Grade Admin
 
+### ToDo
+- Write stories for all components
+
 ## State Shape
 
 ```
@@ -39,9 +42,48 @@
       }
     }
     ...
-  }
-  sidebar: {
-    open: bool
+  },
+  UI: {
+    modal: {
+      isOpen:  PropTypes.bool,
+      // boolean to control the state of the popover
+      toggle:  PropTypes.func,
+      // callback for toggling isOpen in the controlling component
+      size: PropTypes.string,
+      // control backdrop, see http://v4-alpha.getbootstrap.com/components/modal/#options
+      backdrop: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.oneOf(['static'])
+      ]),
+      keyboard: PropTypes.bool,
+      // zIndex defaults to 1000.
+      zIndex: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      className: PropTypes.string,
+      wrapClassName: PropTypes.string,
+      modalClassName: PropTypes.string,
+      backdropClassName: PropTypes.string,
+      contentClassName: PropTypes.string,
+    },
+    workArea: {
+
+    },
+    surveyTabs: {
+      selectedTab: number
+    }
   }
 }
 ```
+### Type of Survey
+- Single Input
+- Radio Group
+- Dropdown
+- Checkboxes
+- Rating
+- Comment
+
+
+### Todo
+- Show buttons css
