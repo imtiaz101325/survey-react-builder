@@ -1,28 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import EditableSurvey from './EditableSurvey';
 import AddButton from './AddButton';
 
 const WorkArea = ({
-  models,
-  addModel,
-  revealButtonsAction,
-  hideButtonsAction,
-  showButtons,
-  surveyOptions
+  handleAddSingleInput,
+  questions
 }) => {
     return (
         <div>
-            {models.map((json) => <EditableSurvey modelJSON={json}/>)
+            {questions.map((json) => <EditableSurvey modelJSON={json}/>)
 }
             <AddButton
-              handleAddModel={addModel}
-              handleRevealButtons={revealButtonsAction}
-              handleHideButtons={hideButtonsAction}
-              showButtons={showButtons}
-              options={surveyOptions}/>
+              addSingleInput={handleAddSingleInput}/>
         </div>
     )
+}
+
+WorkArea.propTypes = {
+  handleAddSingleInput: PropTypes.func.isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default WorkArea;
