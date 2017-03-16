@@ -1,6 +1,10 @@
 import { connect } from 'react-redux';
 
-import addButton, { addSingleInput, toggleAddButtons } from '../modules/AddSurvey';
+import addButton, {
+   addSingleInput,
+   revealButtons,
+   hideButtons
+  } from '../modules/AddSurvey';
 
 import WorkArea from '../components/WorkArea';
 
@@ -33,8 +37,11 @@ const mapDispatchToProps = (dispatch) => {
                       ]
                   }))
     },
-    toggleButtons: (event) => {
-      dispatch(toggleAddButtons(event))
+    revealButtonsAction: () => {
+      dispatch(revealButtons())
+    },
+    hideButtonsAction: () => {
+      dispatch(hideButtons())
     }
   }
 }

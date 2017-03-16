@@ -5,29 +5,31 @@ import './AddButton.css';
 
 const AddButton = ({
   handleAddModel,
-  handleToggleButtons,
+  handleRevealButtons,
+  handleHideButtons,
   showButtons,
   options
 }) => {
-  return <div className="AddButton"
-      onMouseOver={
-        (event) => {
-          console.log("Happening", event);
-          handleToggleButtons(event)
-        }
-      }
-      onMouseLeave={
-        (event) => handleToggleButtons(event)
-      } >
+  return <div>
       <Button color="primary"
               onClick={
                 () => handleAddModel()
               }
-               >Add</Button>
-      {
-        (showButtons)?
-          options.map(surveyType => <Button color="primary">{surveyType}</Button>):<div />
-      }
+              onMouseOver={
+                (event) => {
+                  handleRevealButtons(event)
+                }
+              }>+</Button>
+      <div
+        className="AddButton"
+        onMouseLeave={
+          (event) => handleHideButtons(event)
+        }>
+        {
+          (showButtons)?
+            options.map(surveyType => <Button color="primary">{surveyType}</Button>):<div />
+        }
+      </div>
     </div>
 }
 

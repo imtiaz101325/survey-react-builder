@@ -6,7 +6,8 @@ import AddButton from './AddButton';
 const WorkArea = ({
   models,
   addModel,
-  toggleButtons,
+  revealButtonsAction,
+  hideButtonsAction,
   showButtons,
   surveyOptions
 }) => {
@@ -16,7 +17,8 @@ const WorkArea = ({
 }
             <AddButton
               handleAddModel={addModel}
-              handleToggleButtons={toggleButtons}
+              handleRevealButtons={revealButtonsAction}
+              handleHideButtons={hideButtonsAction}
               showButtons={showButtons}
               options={surveyOptions}/>
         </div>
