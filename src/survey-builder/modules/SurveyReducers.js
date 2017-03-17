@@ -12,6 +12,8 @@ const MOVE_SURVEY = 'MOVE_SURVEY';
 const ADD_TAB = 'ADD_TAB';
 const DELETE_TAB = 'DELETE_TAB';
 const FOCUS_TAB = 'FOCUS_TAB';
+const SHOW_MODAL = 'SHOW_MODAL';
+const HIDE_MODAL = 'HIDE_MODAL';
 
 export const addTab = () => {
   return {
@@ -92,7 +94,6 @@ export const addRadioGroup = (surveyId) => {
       }
      }
 }
-
 
 export const addDropdown = (surveyId) => {
     return {
@@ -197,6 +198,20 @@ export const moveSurvey = ({ sourceId, targetId, tab }) => {
     tab
   }
 }
+
+export const showModal = () => {
+  return {
+    type: SHOW_MODAL
+  }
+}
+
+
+export const hideModal = () => {
+  return {
+    type: HIDE_MODAL
+  }
+}
+
 
 const initialPageId = generateId();
 
@@ -338,8 +353,21 @@ export const triggersReducer = (state = {}, action) => {
   return state;
 }
 
-export const modalUiReducer = (state = {}, action) => {
-  return state;
+export const modalUiReducer = (state = {
+  open: false
+}, action) => {
+  switch (action.type) {
+    case SHOW_MODAL:
+      return {
+        open: true
+      }
+    case HIDE_MODAL:
+      return {
+        open: false
+      }
+    default:
+      return state;
+  }
 }
 
 export const surveyBuilderUiReducer = (state = {}, action) => {

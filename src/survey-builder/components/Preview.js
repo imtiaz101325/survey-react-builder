@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Survey, Model } from 'survey-react';
-import { Button } from 'reactstrap';
+import { Button } from 'react-bootstrap';
 
 const Preview = ({ previewModel, editSurvey }) => {
 
@@ -8,7 +8,7 @@ const Preview = ({ previewModel, editSurvey }) => {
 
   return (
     <div>
-      <Button color="primary"
+      <Button bsStyle="primary"
               onClick={editSurvey}
               >Options</Button>
       <div>

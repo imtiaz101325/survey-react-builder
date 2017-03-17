@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Survey, Model } from "survey-react";
-import { Button } from 'reactstrap';
+import { Button } from 'react-bootstrap';
 import { compose } from 'redux';
 import { DragSource, DropTarget } from 'react-dnd';
 
@@ -35,6 +35,7 @@ const EditableSurvey = ({
   onMove,
   model,
   onDelete,
+  onShowModal,
   id,
   validators,
   choices,
@@ -56,10 +57,12 @@ const EditableSurvey = ({
 
   return compose(connectDragSource, connectDropTarget)(
     <div className="EditableSurvey--wrapper">
-      <Button color="danger" size="sm" onClick={() => {
+      <Button bsStyle="danger" bsSize="small" onClick={() => {
         onDelete(id, tab, validators, choices)
       }} >Delete</Button>
-      <Button color="secondary" size="sm" >Edit</Button>
+      <Button bsStyle="default" bsSize="small" onClick={() => {
+        onShowModal('QUESTION', id)
+      }}>Edit</Button>
       <Survey model={surveyModel} />
     </div>
   )

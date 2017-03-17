@@ -43,6 +43,50 @@
     }
     ...
   },
+  options: {
+    surveyLevel: {
+      onlyone : {
+      clearInvisibleValues: true,
+      completeText: "completeText",
+      completedHtml: "completeHTML",
+      cookieName: "cookieName",
+      focusFirstQuestionAutomatic: false,
+      goNextPageAutomatic: true,
+      locale: "fr",
+      mode: "display",
+      pageNextText: "pageNextText",
+      pagePrevText: "PagePrevText",
+      questionStartIndex: "quentionStati",
+      questionTitleLocation: "bottom",
+      questionTitleTemplate: "sfafs",
+      requiredText: "*sdf",
+      sendResultOnPageNext: true,
+      showNavigationButtons: false,
+      showPageNumbers: true,
+      showPageTitles: false,
+      showProgressBar: "top",
+      showQuestionNumbers: "onPage",
+      showTitle: false,
+      storeOthersAsComment: false,
+      surveyId: "sdfas",
+      surveyPostId: "sdfas",
+      title: "sdfasdf",
+      }
+    },
+    pageLeve: {
+      pageId: {
+       name: "PageLevel",
+       navigationButtonsVisibility: "show",
+       title: "pageTitiel",
+       visibleIf: "visibleIfLogic",
+      }
+    },
+    questionLevel: {
+      questionId: {
+        
+      }
+    }
+  }
   UI: {
     modal: {
       isOpen:  PropTypes.bool,

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Button } from 'reactstrap';
+import { Button } from 'react-bootstrap';
 
 import EditableSurvey from './EditableSurvey';
 
@@ -11,14 +11,15 @@ const SurveyTabs = ({
   handleOnSurveyMove,
   addNewTab,
   focusTab,
-  deleteTab
+  deleteTab,
+  showModal
  }) => (
   <div>
-    <div>
+    <div style={{cursor: 'pointer'}}>
       {tabs.map(
         ( { name, id }, key, arr) => {
           // if(selectedTab === key){ !!add classnames later
-            return <div key={key} >
+            return <span key={key} >
               <div className="WorkArea--tab WorkArea--tab-selected"
                           onClick={() => {
                             focusTab(id);
@@ -34,12 +35,12 @@ const SurveyTabs = ({
                           }
               {
                 (key === 0)?
-                <Button color="danger"
-                        size="sm"
+                <Button bsStyle="danger"
+                        bsSize="xsmall"
                         disabled
                         >-</Button> :
-                <Button color="danger"
-                        size="sm"
+                <Button bsStyle="danger"
+                        bsSize="xsmall"
                         onClick={() => {
                           if(id === selectedTab){
                             deleteTab(id, arr[key-1].id);
@@ -49,12 +50,12 @@ const SurveyTabs = ({
                         }}
                         >-</Button>
               }
-            </div>
+            </span>
           // }
         }
       )}
-      <Button color="primary"
-              size="sm"
+      <Button bsStyle="primary"
+              bsSize="xs"
               onClick={addNewTab}
               >+</Button>
     </div>
@@ -66,6 +67,7 @@ const SurveyTabs = ({
                                                         tab={selectedTab}
                                                         onDelete={handleSurveyDelete}
                                                         onMove={handleOnSurveyMove}
+                                                        onShowModal={showModal}
                                                         validators={questions.validators || []} //error here
                                                         choices={questions.choices || []}
                                                         id={id}

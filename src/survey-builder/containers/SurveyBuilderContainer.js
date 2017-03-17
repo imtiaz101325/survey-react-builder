@@ -16,7 +16,10 @@ import {
   deleteSurvey,
   focusTab,
   deleteTab,
-  moveSurvey
+  moveSurvey,
+  showModal,
+  loadModal,
+  hideModal
  } from '../modules/SurveyReducers';
 
 import SurveyBuilder from '../components/SurveyBuilder';
@@ -26,6 +29,7 @@ const pagesObject = state => state.entities.pages;
 const questionsObject = state => state.entities.questions;
 // const triggersObject = state => state.entities.triggers;
 const selectedTab = state => state.ui.surveyTab.selectedTab;
+const getModal = state => state.ui.modal.open;
 
 const getTabs = createSelector(
   [tabsArray, pagesObject],
@@ -59,11 +63,51 @@ const getQuestions = createSelector(
   }
 );
 
+const renderTabLevel = createSelector(
+  [tabsArray, pagesObject],
+  (tabs, pages) => {
+    return tabs.map(
+        id => (
+          pages[id]
+        )
+      )
+    }
+)
+
+const renderPageLevel = createSelector(
+  [renderTabLevel, questionsObject],
+  (pages, questionsEntity) => {
+    return {
+      pages: pages.map(
+        ({questions, ...rest}) => {
+          return {
+            ...rest,
+            questions: questions.map(
+              id => (questionsEntity[id])
+            )
+          }
+        }
+      )
+    }
+
+  }
+)
+
+const getPreview = createSelector(
+  [renderPageLevel],
+  (renderedPage) => {
+    return renderedPage
+  }
+)
+
 const mapStateToProps = (state) => {
     return {
       tabs: getTabs(state),
       questions: getQuestions(state),
-      selectedTab: selectedTab(state), //todo preview model
+      selectedTab: selectedTab(state),
+      modal: getModal(state),
+      // modalOptions: getModalOption(state),
+      previewModel: getPreview(state)
     }
 }
 
@@ -134,6 +178,19 @@ const mapDispatchToProps = (dispatch) => {
       },
       handleSurveyMove: (sourceId,targetId, tab) => {
         dispatch(moveSurvey(sourceId, targetId, tab))
+      },
+      handleShowModal: (type, id) => {
+        switch (type) {
+          case 'QUESTION':
+            dispatch(showModal());
+            // dispatch(loadModal(type));
+            break;
+          default:
+
+        }
+      },
+      handleHideModal: () => {
+        dispatch(hideModal());
       }
     }
 }
