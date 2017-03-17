@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Survey, Model } from 'surveyjs';
+import { Survey, Model } from 'survey-react';
 import { Button } from 'reactstrap';
 
 const Preview = ({ previewModel, editSurvey }) => {

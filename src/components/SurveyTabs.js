@@ -9,21 +9,39 @@ const SurveyTabs = ({
   selectedTab,
   handleSurveyDelete,
   addNewTab,
-  focusTab
+  focusTab,
+  deleteTab
  }) => (
   <div>
     <div>
       {tabs.map(
-        ( name , key) => {
-          if(selectedTab === key){
-            return <div className="WorkArea--tab WorkArea--tab-selected"
-                        onClick={focusTab(key)}
-                        >{name}</div>
-          }else{
-            return <div className="WorkArea--tab"
-                        onClick={focusTab(key)}
-                        >{name}</div>
-          }
+        ( { name, id }, key) => {
+          // if(selectedTab === key){ !!add classnames later
+            return <div>
+              <div className="WorkArea--tab WorkArea--tab-selected"
+                          onClick={() => {
+                            focusTab(id)
+                          }}
+                          key={key}
+                          >{name}</div>
+              {
+                (key === 0)?
+                <Button color="danger"
+                        size="sm"
+                        disabled
+                        onClick={() => {
+                          deleteTab(id)
+                        }}
+                        >-</Button> :
+                <Button color="danger"
+                        size="sm"
+                        onClick={() => {
+                          deleteTab(id)
+                        }}
+                        >-</Button>
+              }
+            </div>
+          // }
         }
       )}
       <Button color="primary"
@@ -33,25 +51,34 @@ const SurveyTabs = ({
     </div>
     <div>
       {
+        (questions.length) ?
         questions.map(
-          ({json, id}, key) => <EditableSurvey modelJSON={json}
-                                    onDelete={handleSurveyDelete(id, key)}
-                                    id={id}
-                                    key={key} />
-        )
+          ({questionModel, id}, key) => <EditableSurvey model={questionModel}
+                                                        tab={selectedTab}
+                                                        onDelete={handleSurveyDelete}
+                                                        validators={questions.validators || []} //error here
+                                                        choices={questions.choices || []}
+                                                        id={id}
+                                                        key={key} />
+        ) :
+          <div />
+
       }
     </div>
   </div>
 )
 
 SurveyTabs.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tabs: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string
+  })).isRequired,
   questions: PropTypes.arrayOf(PropTypes.shape({
     json: PropTypes.object,
     id: PropTypes.string
   })).isRequired,
   handleSurveyDelete: PropTypes.func,
-  selectedTab: PropTypes.number,
+  selectedTab: PropTypes.string.isRequired,
   addNewTab: PropTypes.func,
   focusTab: PropTypes.func
 }

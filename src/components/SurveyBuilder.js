@@ -16,6 +16,7 @@ const SurveyBuilder = ({
   handleFocusTab,
   addButtonActions,
   handleEditSurvey,
+  handleDeleteTab
 }) => {
     return (
         <div>
@@ -25,8 +26,10 @@ const SurveyBuilder = ({
                         handleSurveyDelete={handleSurveyDelete}
                         selectedTab={selectedTab}
                         addNewTab={handleAddNewTab}
+                        deleteTab={handleDeleteTab}
                         focusTab={handleFocusTab} />
-            <AddButton actions={addButtonActions} />
+            <AddButton actions={addButtonActions}
+                       tab={selectedTab} />
             <Preview previewModel={previewModel}
                      editSurvey={handleEditSurvey} />
         </div>

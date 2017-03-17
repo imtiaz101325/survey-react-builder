@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Button } from 'reactstrap';
+import { generate as generateId } from 'shortid';
 
 import './AddButtons.css';
 
-const AddButtons = ({ actions }) => (
+const AddButtons = ({ actions, tab }) => (
   <div className='AddButtons'>
     <Button color='primary'
             >+</Button>
@@ -12,7 +13,10 @@ const AddButtons = ({ actions }) => (
         ({ color, action, name }, key) =>(
           <Button key={key}
                   color={color}
-                  onClick={action()}
+                  onClick={() => {
+                    const survey = generateId();
+                    action(tab, survey)
+                  }}
                   >{name}</Button>
       ))
     }
@@ -24,7 +28,8 @@ AddButtons.propTypes = {
     color: PropTypes.string,
     name: PropTypes.string,
     action: PropTypes.func
-  })).isRequired
+  })).isRequired,
+  tab: PropTypes.string.isRequired
 }
 
 export default AddButtons;
