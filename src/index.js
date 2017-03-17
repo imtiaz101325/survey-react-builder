@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import rootReducer from './modules';
 
-import App from './components/App';
+import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'survey-react/survey.css';
@@ -18,7 +19,9 @@ let store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter >
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

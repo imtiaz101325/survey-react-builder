@@ -8,6 +8,7 @@ const SurveyTabs = ({
   questions,
   selectedTab,
   handleSurveyDelete,
+  handleOnSurveyMove,
   addNewTab,
   focusTab,
   deleteTab
@@ -15,28 +16,36 @@ const SurveyTabs = ({
   <div>
     <div>
       {tabs.map(
-        ( { name, id }, key) => {
+        ( { name, id }, key, arr) => {
           // if(selectedTab === key){ !!add classnames later
-            return <div>
+            return <div key={key} >
               <div className="WorkArea--tab WorkArea--tab-selected"
                           onClick={() => {
-                            focusTab(id)
+                            focusTab(id);
                           }}
-                          key={key}
+
+                          style={{display: 'inline'}}
                           >{name}</div>
+
+                          {
+                            (id === selectedTab) ?
+                              <span >✓</span>
+                            : <sapn ></sapn>
+                          }
               {
                 (key === 0)?
                 <Button color="danger"
                         size="sm"
                         disabled
-                        onClick={() => {
-                          deleteTab(id)
-                        }}
                         >-</Button> :
                 <Button color="danger"
                         size="sm"
                         onClick={() => {
-                          deleteTab(id)
+                          if(id === selectedTab){
+                            deleteTab(id, arr[key-1].id);
+                          }else{
+                            deleteTab(id, selectedTab);
+                          }
                         }}
                         >-</Button>
               }
@@ -56,10 +65,12 @@ const SurveyTabs = ({
           ({questionModel, id}, key) => <EditableSurvey model={questionModel}
                                                         tab={selectedTab}
                                                         onDelete={handleSurveyDelete}
+                                                        onMove={handleOnSurveyMove}
                                                         validators={questions.validators || []} //error here
                                                         choices={questions.choices || []}
                                                         id={id}
-                                                        key={key} />
+                                                        key={key}
+                                                        serial={key} />
         ) :
           <div />
 

@@ -2,25 +2,21 @@ import { combineReducers } from 'redux';
 import { tabsReducer,
          pagesReducer,
          questionsReducer,
-         choicesReducer,
-         validatorsReducer,
          triggersReducer,
-         modalReducer,
-         surveyBuilderReducer,
-         surveyTabReducer } from './SurveyReducers';
+         modalUiReducer,
+         surveyBuilderUiReducer,
+         surveyTabUiReducer } from '../survey-builder/modules/SurveyReducers';
 
 const entitiesReducer = combineReducers({
   pages: pagesReducer,
   questions: questionsReducer,
-  choices: choicesReducer,
-  validators: validatorsReducer,
   triggers: triggersReducer
 });
 
 const uiReducer = combineReducers({
-  modal: modalReducer,
-  surveyBuilder: surveyBuilderReducer,
-  surveyTab: surveyTabReducer
+  modal: modalUiReducer,
+  surveyBuilder: surveyBuilderUiReducer,
+  surveyTab: surveyTabUiReducer
 });
 
 const rootReducer = combineReducers({

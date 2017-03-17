@@ -8,6 +8,7 @@ const ADD_CHECKBOX = 'ADD_CHECKBOX';
 const ADD_RATING = 'ADD_RATING';
 const ADD_COMMENT = 'ADD_COMMENT';
 const DELETE_SURVEY = 'DELETE_SURVEY';
+const MOVE_SURVEY = 'MOVE_SURVEY';
 const ADD_TAB = 'ADD_TAB';
 const DELETE_TAB = 'DELETE_TAB';
 const FOCUS_TAB = 'FOCUS_TAB';
@@ -32,10 +33,11 @@ export const focusTab = tabId => {
   }
 }
 
-export const deleteTab = tabId => {
+export const deleteTab = (tabId, focusId) => {
   return {
     type: DELETE_TAB,
-    id: tabId
+    tabId,
+    focusId
   }
 }
 
@@ -47,7 +49,20 @@ export const addSingleInput = (surveyId) => {
         type: 'text',
         name: 'Question Name',
         validators: [],
-        choices: []
+        choices: [
+          {
+           value: 1,
+           text: "first item"
+          },
+          {
+           value: 2,
+           text: "second item"
+          },
+          {
+           value: 3,
+           text: "third item"
+          }
+        ]
       }
      }
 }
@@ -60,7 +75,20 @@ export const addRadioGroup = (surveyId) => {
         type: 'radiogroup',
         name: 'Radio Group Name',
         validators: [],
-        choices: []
+        choices: [
+          {
+           value: 1,
+           text: "first item"
+          },
+          {
+           value: 2,
+           text: "second item"
+          },
+          {
+           value: 3,
+           text: "third item"
+          }
+        ]
       }
      }
 }
@@ -74,7 +102,20 @@ export const addDropdown = (surveyId) => {
         type: 'dropdown',
         name: 'Dropdown Name',
         validators: [],
-        choices: []
+        choices: [
+          {
+           value: 1,
+           text: "first item"
+          },
+          {
+           value: 2,
+           text: "second item"
+          },
+          {
+           value: 3,
+           text: "third item"
+          }
+        ]
       }
      }
 }
@@ -87,7 +128,20 @@ export const addCheckbox = (surveyId) => {
         type: 'checkbox',
         name: 'Checkbox Name',
         validators: [],
-        choices: []
+        choices: [
+          {
+           value: 1,
+           text: "first item"
+          },
+          {
+           value: 2,
+           text: "second item"
+          },
+          {
+           value: 3,
+           text: "third item"
+          }
+        ]
       }
      }
 }
@@ -99,8 +153,7 @@ export const addRating = (surveyId) => {
       options: {
         type: 'rating',
         name: 'Rating Name',
-        validators: [],
-        choices: []
+        validators: []
       }
      }
 }
@@ -112,8 +165,7 @@ export const addComment = (surveyId) => {
       options: {
         type: 'comment',
         name: 'Comment Name',
-        validators: [],
-        choices: []
+        validators: []
       }
      }
 }
@@ -137,6 +189,15 @@ export const deleteSurvey = (id, tab, validators, choices) => {
   }
 }
 
+export const moveSurvey = ({ sourceId, targetId, tab }) => {
+  return {
+    type: MOVE_SURVEY,
+    sourceId,
+    targetId,
+    tab
+  }
+}
+
 const initialPageId = generateId();
 
 export const tabsReducer = (state = [
@@ -150,7 +211,7 @@ export const tabsReducer = (state = [
       ];
     case DELETE_TAB:
       return state.filter(
-        id => (id !== action.id)
+        id => (id !== action.tabId)
       )
     default:
       return state;
@@ -185,13 +246,36 @@ export const pagesReducer = (state = {
     case DELETE_SURVEY:
       return {
         ...state,
-        [action.tab]:{
+        [action.tab]: {
           ...state[action.tab],
           questions: state[action.tab].questions.filter(
             id => (id !== action.id)
           )
         }
       }
+    case MOVE_SURVEY:
+      const questionsArray = state[action.tab].questions;
+      const source = action.sourceId;
+      const target = action.targetId;
+
+      //not found
+      if(source === -1 || target === -1 ){
+        return state;
+      }
+
+      const sourceRemoved = questionsArray.filter( id => (id !== source));
+      const targetIndex = sourceRemoved.indexOf(target);
+      const firstHalf = sourceRemoved.slice(0, targetIndex+1);
+      const secondHalf = sourceRemoved.slice(targetIndex+1, sourceRemoved.length);
+
+      return {
+        ...state,
+        [action.tab]: {
+          ...state[action.tab],
+          questions: [...firstHalf, source, ...secondHalf]
+        }
+      }
+
     default:
       return state;
   }
@@ -199,9 +283,9 @@ export const pagesReducer = (state = {
 
 export const questionsReducer = (state = {}, action) => {
   switch (action.type) {
-    case DELETE_SURVEY:
-      const { [action.id]: deleted, ...newState } = state;
-      return newState;
+    // case DELETE_SURVEY:
+    //   const { [action.id]: deleted, ...newState } = state;
+    //   return newState;
     case ADD_SINGLE_INPUT:
       return {
         ...state,
@@ -249,57 +333,20 @@ export const questionsReducer = (state = {}, action) => {
   }
 }
 
-export const choicesReducer = (state = {}, action) => {
-  switch (action.type) {
-    case DELETE_SURVEY:
-      // return action.choices.reduece(
-      //   (acc, curr) => {
-      //     if(!state.hasOwnProperty(curr)){
-      //       return {
-      //         ...acc,
-      //         [curr] : state[curr]
-      //       }
-      //     }
-      //     return acc;
-      //   }, {}
-      // )
-    default:
-        return state;
-  }
-}
-
-export const validatorsReducer = (state = {}, action) => {
-  switch (action.type) {
-    case DELETE_SURVEY:
-      // return action.validators.reduece(
-      //   (acc, curr) => {
-      //     if(!state.hasOwnProperty(curr)){
-      //       return {
-      //         ...acc,
-      //         [curr] : state[curr]
-      //       }
-      //     }
-      //     return acc;
-      //   }, {}
-      // )
-    default:
-        return state;
-  }
-}
 
 export const triggersReducer = (state = {}, action) => {
   return state;
 }
 
-export const modalReducer = (state = {}, action) => {
+export const modalUiReducer = (state = {}, action) => {
   return state;
 }
 
-export const surveyBuilderReducer = (state = {}, action) => {
+export const surveyBuilderUiReducer = (state = {}, action) => {
   return state;
 }
 
-export const surveyTabReducer = (state = {
+export const surveyTabUiReducer = (state = {
   selectedTab: initialPageId
 }, action) => {
   switch (action.type) {
@@ -310,6 +357,10 @@ export const surveyTabReducer = (state = {
     case FOCUS_TAB:
       return Object.assign({}, state, {
         selectedTab: action.id
+      })
+    case DELETE_TAB:
+      return Object.assign({}, state, {
+        selectedTab: action.focusId
       })
     default:
       return state;
