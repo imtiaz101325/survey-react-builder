@@ -3,7 +3,7 @@ import { Survey, Model } from 'survey-react';
 import { Button } from 'react-bootstrap';
 
 const Preview = ({ previewModel, editSurvey }) => {
-
+  
   const preview = new Model(previewModel);
 
   return (

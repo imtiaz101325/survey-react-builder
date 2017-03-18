@@ -31,9 +31,9 @@ export const getQuestions = createSelector(
 
       const questionsArray = questionsInTab.map(
         id => ({
-          questionModel: questions[id],
-          id
-        })
+            questionModel: questions[id],
+            id
+          })
       )
 
       return questionsArray;
@@ -47,9 +47,19 @@ export const renderTabLevel = createSelector(
   [tabsArray, pagesObject],
   (tabs, pages) => {
     return tabs.map(
-        id => (
-          pages[id]
-        )
+        id => {
+          const page = pages[id];
+
+          Object.keys(page).forEach(
+            key => {
+              if(page[key].value){
+                page[key] = page[key].value;
+              }
+            }
+          )
+
+          return page;
+        }
       )
     }
 );
@@ -60,10 +70,23 @@ export const renderPageLevel = createSelector(
     return {
       pages: pages.map(
         ({questions, ...rest}) => {
+          rest.navigationButtonsVisibility = 'iherit';
           return {
             ...rest,
             questions: questions.map(
-              id => (questionsEntity[id])
+              id => {
+                const question = questionsEntity[id];
+
+                Object.keys(question).forEach(
+                  key => {
+                    if(question[key].value){
+                      question[key] = question[key].value;
+                    }
+                  }
+                )
+
+                return question;
+              }
             )
           }
         }
@@ -76,6 +99,14 @@ export const renderPageLevel = createSelector(
 export const getPreview = createSelector(
   [getSurveyOptions, renderPageLevel],
   (options, renderedPage) => {
+    Object.keys(options).forEach(
+      key => {
+        if(options[key].value){
+          options[key] = options[key].value;
+        }
+      }
+    )
+
     return {
       ...options,
       ...renderedPage,
@@ -91,7 +122,7 @@ export const getModalOption = createSelector(
         triggers,
         completedHtml,
         ...General,
-      } = options;
+      } = options;      
 
       return {
         options: {
@@ -129,6 +160,49 @@ export const getModalOption = createSelector(
 
     if (modal === 'QUESTION') {
       const question = questionsObj[id];
+
+      if(    question.type !== 'text'
+          && question.type !== 'comment'
+          && question.type !== 'rating' ) {
+
+        const {
+          validators,
+          visibleIf,
+          choices,
+          ...General
+        } = question;
+
+        return {
+          options: {
+            General,
+            Choices: choices,
+            Validators: validators,
+            'Visible If': visibleIf,
+          },
+          type: modal,
+          selected: id,
+        }
+      }
+
+      if (question.type === 'rating') {
+        const {
+          validators,
+          visibleIf,
+          rateValues,
+          ...General
+        } = question;
+
+        return {
+          options: {
+            General,
+            'Rate Values': rateValues,
+            Validators: validators,
+            'Visible If': visibleIf,
+          },
+          type: modal,
+          selected: id,
+        }
+      }
 
       const {
         validators,

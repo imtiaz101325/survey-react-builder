@@ -103,6 +103,8 @@ class EditModal extends Component {
                                >{ option }</Checkbox>
             }
 
+            if (option === 'type' ) return null;
+
             return <FormGroup key={ nesting + key + option }>
                      <ControlLabel>{ option }</ControlLabel>
                      <FormControl type={ computedType }

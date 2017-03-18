@@ -16,7 +16,7 @@ export const addTab = () => {
     id: generateId(),
     options: {
       name: 'Page Name',
-      title: 'Page Title',
+      title: '',
       navigationButtonsVisibility: 'hiden',
       questions: []
     }
@@ -87,7 +87,6 @@ export const addSurvey = (tabId, surveyId, surveyType) => {
       options = {
         type: 'radiogroup',
         name: 'Radio Group Name',
-        validators: [],
         choices: [
           {
            value: 1,
@@ -101,7 +100,40 @@ export const addSurvey = (tabId, surveyId, surveyType) => {
            value: 3,
            text: "third item"
           }
-        ]
+        ],
+        choicesOrder: {
+          value: 'none',
+          options: [
+            'none',
+            'asc',
+            'desc',
+          ]
+        },
+        colCount: {
+          value: '1',
+          options: [
+            '0', '1', '2', '3', '4',
+          ]
+        },
+        commentText: '',
+        hasComment: false,
+        hasOther: false,
+        indent: {
+          value: '0',
+          options: [
+            '0', '1', '2', '3',
+          ]
+        },
+        isRequired: false,
+        otherErrorText: '',
+        otherText: 'Other (describe)',
+        startWithNewLine: true,
+        storeOthersAsComment: true,
+        validators: [],
+        title: '',
+        visible: true,
+        visibleIf: '',
+        width: '',
       }
       break;
     case 'DROPDOWN':
@@ -112,17 +144,44 @@ export const addSurvey = (tabId, surveyId, surveyType) => {
         choices: [
           {
            value: 1,
-           text: "first item"
+           text: 'first item'
           },
           {
            value: 2,
-           text: "second item"
+           text: 'second item'
           },
           {
            value: 3,
-           text: "third item"
+           text: 'third item'
           }
-        ]
+        ],
+        choicesOrder: {
+          value: 'none',
+          options: [
+            'none',
+            'asc',
+            'desc',
+          ]
+        },
+        commentText: '',
+        hasComment: false,
+        hasOther: false,
+        indent: {
+          value: '0',
+          options: [
+            '0', '1', '2', '3',
+          ]
+        },
+        isRequired: false,
+        optionsCaption: '',
+        otherErrorText: '',
+        otherText: 'Other (describe)',
+        startWithNewLine: true,
+        storeOthersAsComment: true,
+        title: '',
+        visible: true,
+        visibleIf: '',
+        width: ''
       }
       break;
     case 'CHECKBOX':
@@ -143,21 +202,86 @@ export const addSurvey = (tabId, surveyId, surveyType) => {
            value: 3,
            text: "third item"
           }
-        ]
+        ],
+        choicesOrder: {
+          value: 'none',
+          options: [
+            'none',
+            'asc',
+            'desc',
+          ]
+        },
+        colCount: {
+          value: '1',
+          options: [
+            '0', '1', '2', '3', '4',
+          ]
+        },
+        commentText: '',
+        hasComment: false,
+        hasOther: false,
+        indent: {
+          value: '0',
+          options: [
+            '0', '1', '2', '3',
+          ]
+        },
+        isRequired: false,
+        otherErrorText: '',
+        otherText: 'Other (describe)',
+        startWithNewLine: true,
+        storeOthersAsComment: true,
+        title: '',
+        visible: true,
+        visibleIf: '',
+        width: '',
       }
       break;
     case 'RATING':
       options = {
         type: 'rating',
         name: 'Rating Name',
-        validators: []
+        validators: [],
+        commentText: '',
+        hasComment: false,
+        indent: {
+          value: '0',
+          options: [
+            '0', '1', '2', '3',
+          ]
+        },
+        isRequired: false,
+        maximumRateDescription: '',
+        mininumRateDescription: '',
+        rateValues: [],
+        startWithNewLine: true,
+        title: '',
+        visible: true,
+        visibleIf: '',
+        width: '',
       }
       break;
     case 'COMMENT':
       options = {
         type: 'comment',
         name: 'Comment Name',
-        validators: []
+        validators: [],
+        cols: '50',
+        commentText: '',
+        indent: {
+          value: '0',
+          options: [
+            '0', '1', '2', '3',
+          ]
+        },
+        isRequired: false,
+        placeHolder: '',
+        rows: '4',
+        startWithNewLine: true,
+        title: '',
+        visible: true,
+        visibleIf: '',
+        width: '',
       }
       break;
     default:
@@ -222,10 +346,7 @@ export const hideModal = (options, type, id) => {
 export const surveyOptionsReducer = (state = {
   clearInvisibleValues: false,
   completeText: '',
-  completedHtml: {
-    value: '',
-    options: 'html'
-  },
+  completedHtml: '',
   cookieName: '',
   focusFirstQuestionAutomatic: true,
   goNextPageAutomatic: false,
@@ -328,7 +449,7 @@ export const tabsReducer = (state = [
 export const pagesReducer = (state = {
   [initialPageId]: {
     name: 'Page Name',
-    title: 'Page Title',
+    title: '',
     navigationButtonsVisibility: {
       value: 'hide',
       options: [
