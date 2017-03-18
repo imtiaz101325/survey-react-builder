@@ -5,14 +5,15 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import {
   addTab,
-  addSurvey,
   deleteSurvey,
   focusTab,
   deleteTab,
   moveSurvey,
   showModal,
   hideModal,
- } from '../modules/SurveyReducers';
+} from '../modules/actions';
+
+import addSurvey from '../modules/addSurveyAction';
 
 import {
   selectedTab,
