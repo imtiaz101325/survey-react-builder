@@ -1,12 +1,7 @@
 import { generate as generateId } from 'shortid';
 
 const ADD_SURVEY = 'ADD_SURVEY';
-const ADD_SINGLE_INPUT = 'ADD_SINGLE_INPUT';
-const ADD_RADIO_GROUP = 'ADD_RADIO_GROUP';
-const ADD_DROPDOWN = 'ADD_DROPDOWN';
-const ADD_CHECKBOX = 'ADD_CHECKBOX';
-const ADD_RATING = 'ADD_RATING';
-const ADD_COMMENT = 'ADD_COMMENT';
+const EDIT_SURVEY = 'EDIT_SURVEY';
 const DELETE_SURVEY = 'DELETE_SURVEY';
 const MOVE_SURVEY = 'MOVE_SURVEY';
 const ADD_TAB = 'ADD_TAB';
@@ -43,37 +38,53 @@ export const deleteTab = (tabId, focusId) => {
   }
 }
 
-export const addSingleInput = (surveyId) => {
-    return {
-      type: ADD_SINGLE_INPUT,
-      id: surveyId,
-      options: {
+export const addSurvey = (tabId, surveyId, surveyType) => {
+
+  let options = {};
+
+  switch (surveyType) {
+    case 'SINGLE_INPUT':
+      options = {
         type: 'text',
         name: 'Question Name',
+        commentText: '',
+        indent: {
+          value: '0',
+          options: [
+            '0', '1', '2', '3',
+          ]
+        },
+        inputType: {
+          value: 'text',
+          options: [
+            'date',
+            'color',
+            'datetime',
+            'datetime-local',
+            'email',
+            'month',
+            'number',
+            'password',
+            'range',
+            'tel',
+            'text',
+            'time',
+            'url',
+            'week',
+          ]
+        },
+        isRequired: false,
+        placeHolder: '',
+        size: '25',
+        startWithNewLine: true,
+        title: '',
+        visibleIf: '',
+        width: '',
         validators: [],
-        choices: [
-          {
-           value: 1,
-           text: "first item"
-          },
-          {
-           value: 2,
-           text: "second item"
-          },
-          {
-           value: 3,
-           text: "third item"
-          }
-        ]
       }
-     }
-}
-
-export const addRadioGroup = (surveyId) => {
-    return {
-      type: ADD_RADIO_GROUP,
-      id: surveyId,
-      options: {
+      break;
+    case 'RADIO_GROUP':
+      options = {
         type: 'radiogroup',
         name: 'Radio Group Name',
         validators: [],
@@ -92,14 +103,9 @@ export const addRadioGroup = (surveyId) => {
           }
         ]
       }
-     }
-}
-
-export const addDropdown = (surveyId) => {
-    return {
-      type: ADD_DROPDOWN,
-      id: surveyId,
-      options: {
+      break;
+    case 'DROPDOWN':
+      options = {
         type: 'dropdown',
         name: 'Dropdown Name',
         validators: [],
@@ -118,14 +124,9 @@ export const addDropdown = (surveyId) => {
           }
         ]
       }
-     }
-}
-
-export const addCheckbox = (surveyId) => {
-    return {
-      type: ADD_CHECKBOX,
-      id: surveyId,
-      options: {
+      break;
+    case 'CHECKBOX':
+      options = {
         type: 'checkbox',
         name: 'Checkbox Name',
         validators: [],
@@ -144,38 +145,39 @@ export const addCheckbox = (surveyId) => {
           }
         ]
       }
-     }
-}
-
-export const addRating = (surveyId) => {
-    return {
-      type: ADD_RATING,
-      id: surveyId,
-      options: {
+      break;
+    case 'RATING':
+      options = {
         type: 'rating',
         name: 'Rating Name',
         validators: []
       }
-     }
-}
-
-export const addComment = (surveyId) => {
-    return {
-      type: ADD_COMMENT,
-      id: surveyId,
-      options: {
+      break;
+    case 'COMMENT':
+      options = {
         type: 'comment',
         name: 'Comment Name',
         validators: []
       }
-     }
-}
+      break;
+    default:
+      break;
+  }
 
-export const addSurvey = (tabId, surveyId) => {
   return {
     type: ADD_SURVEY,
     tab: tabId,
-    survey: surveyId
+    survey: surveyId,
+    options: options
+  }
+}
+
+export const editSurvey = (tabId, surveyId, options) => {
+  return {
+    type: EDIT_SURVEY,
+    tab: tabId,
+    survey: surveyId,
+    options: options
   }
 }
 
@@ -199,16 +201,105 @@ export const moveSurvey = ({ sourceId, targetId, tab }) => {
   }
 }
 
-export const showModal = () => {
+export const showModal = (type, id) => {
   return {
-    type: SHOW_MODAL
+    type: SHOW_MODAL,
+    optionsType: type,
+    id
   }
 }
 
 
-export const hideModal = () => {
+export const hideModal = (options, type, id) => {
   return {
-    type: HIDE_MODAL
+    type: HIDE_MODAL,
+    options,
+    optionsType: type,
+    id
+  }
+}
+
+export const surveyOptionsReducer = (state = {
+  clearInvisibleValues: false,
+  completeText: '',
+  completedHtml: {
+    value: '',
+    options: 'html'
+  },
+  cookieName: '',
+  focusFirstQuestionAutomatic: true,
+  goNextPageAutomatic: false,
+  locale: {
+    value: "en",
+    options: [
+      'da',
+      'de',
+      'en',
+      'fi',
+      'fr',
+      'gr',
+      'nl',
+      'pl',
+      'ru',
+      'sv',
+      'tr',
+    ],
+  },
+  mode: {
+    value: 'edit',
+    options: [
+      'edit',
+      'display',
+    ],
+  },
+  pageNextText: '',
+  pagePrevText: '',
+  questionStartIndex: '',
+  questionTitleLocation: {
+    value: 'top',
+    options: [
+      'top',
+      'bottom',
+    ],
+  },
+  questionTitleTemplate: '',
+  requiredText: '*',
+  sendResultOnPageNext: false,
+  showCompletedPage:	true,
+  showNavigationButtons: true,
+  showPageNumbers: false,
+  showPageTitles: true,
+  showProgressBar: {
+    value: 'off',
+    options: [
+      'off',
+      'top',
+      'bottom',
+    ],
+  },
+  showQuestionNumbers: {
+    value: "on",
+    options: [
+      'on',
+      'onPage',
+      'off'
+    ],
+  },
+  showTitle: true,
+  storeOthersAsComment: true,
+  surveyId: '',
+  surveyPostId: '',
+  title: '',
+  triggers: []
+}, action) => {
+  switch (action.type) {
+    case HIDE_MODAL:
+      if(action.optionsType === 'SURVEY'){
+        return action.options;
+      }
+      return state;
+    default:
+      return state;
   }
 }
 
@@ -238,8 +329,17 @@ export const pagesReducer = (state = {
   [initialPageId]: {
     name: 'Page Name',
     title: 'Page Title',
-    navigationButtonsVisibility: 'hiden',
-    questions: []
+    navigationButtonsVisibility: {
+      value: 'hide',
+      options: [
+        'iherit',
+        'show',
+        'hide',
+      ]
+    },
+    visible: true,
+    visibleIf: '',
+    questions: [],
   }
 }, action) => {
   switch (action.type) {
@@ -290,7 +390,17 @@ export const pagesReducer = (state = {
           questions: [...firstHalf, source, ...secondHalf]
         }
       }
-
+    case HIDE_MODAL:
+      if(action.optionsType === 'PAGE'){
+        return {
+          ...state,
+          [action.id]: {
+            ...action.options,
+            questions: state[action.id].questions,
+          }
+        }
+      }
+      return state;
     default:
       return state;
   }
@@ -298,51 +408,30 @@ export const pagesReducer = (state = {
 
 export const questionsReducer = (state = {}, action) => {
   switch (action.type) {
-    // case DELETE_SURVEY:
-    //   const { [action.id]: deleted, ...newState } = state;
-    //   return newState;
-    case ADD_SINGLE_INPUT:
+    case ADD_SURVEY:
       return {
         ...state,
-        [action.id]: {
+        [action.survey]: {
           ...action.options
         }
       }
-    case ADD_RADIO_GROUP:
+    case EDIT_SURVEY:
       return {
         ...state,
-        [action.id]: {
+        [action.survey]: {
           ...action.options
         }
       }
-    case ADD_DROPDOWN:
-      return {
-        ...state,
-        [action.id]: {
-          ...action.options
+    case HIDE_MODAL:
+      if(action.optionsType === 'QUESTION'){
+        return {
+          ...state,
+          [action.id]: {
+            ...action.options,
+          }
         }
       }
-    case ADD_CHECKBOX:
-      return {
-          ...state,
-          [action.id]: {
-            ...action.options
-          }
-        }
-    case ADD_RATING:
-      return {
-          ...state,
-          [action.id]: {
-            ...action.options
-          }
-        }
-    case ADD_COMMENT:
-      return {
-          ...state,
-          [action.id]: {
-            ...action.options
-          }
-        }
+      return state;
     default:
       return state;
   }
@@ -354,17 +443,23 @@ export const triggersReducer = (state = {}, action) => {
 }
 
 export const modalUiReducer = (state = {
-  open: false
+  open: false,
+  option: 'SURVEY',
+  id: 'SURVEY',
 }, action) => {
   switch (action.type) {
     case SHOW_MODAL:
       return {
-        open: true
-      }
+        open: true,
+        option: action.optionsType,
+        id: action.id,
+      };
     case HIDE_MODAL:
       return {
-        open: false
-      }
+        open: false,
+        option: action.optionsType,
+        id: action.id,
+      };
     default:
       return state;
   }

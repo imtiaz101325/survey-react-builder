@@ -5,7 +5,8 @@ import { tabsReducer,
          triggersReducer,
          modalUiReducer,
          surveyBuilderUiReducer,
-         surveyTabUiReducer } from '../survey-builder/modules/SurveyReducers';
+         surveyTabUiReducer,
+         surveyOptionsReducer } from '../survey-builder/modules/SurveyReducers';
 
 const entitiesReducer = combineReducers({
   pages: pagesReducer,
@@ -20,6 +21,7 @@ const uiReducer = combineReducers({
 });
 
 const rootReducer = combineReducers({
+  surveyOptions: surveyOptionsReducer,
   tabs: tabsReducer,
   entities: entitiesReducer,
   ui: uiReducer

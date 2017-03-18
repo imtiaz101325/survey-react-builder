@@ -22,35 +22,39 @@ const SurveyBuilder = ({
   handleSurveyMove,
 
   selectedTab,
-  addButtonActions,
+  addButtonAction,
 
   previewModel
 }) => {
     return (
-        <Grid fluid>
-            <EditModal visibility={modal}
-                       onHide={handleHideModal}
-                       options={modalOptions} />
-            <Row>
-              <Col md={6}>
-                <SurveyTabs tabs={tabs}
-                            questions={questions}
-                            handleSurveyDelete={handleSurveyDelete}
-                            handleOnSurveyMove={handleSurveyMove}
-                            selectedTab={selectedTab}
-                            addNewTab={handleAddNewTab}
-                            deleteTab={handleDeleteTab}
-                            focusTab={handleFocusTab}
-                            showModal={handleShowModal} />
-                <AddButton actions={addButtonActions}
-                           tab={selectedTab} />
-              </Col>
-              <Col md={6}>
-                <Preview previewModel={previewModel}
-                         showModal={handleShowModal} />
-              </Col>
-            </Row>
-        </Grid>
+        <div>
+          <EditModal visibility={modal}
+                     onHide={handleHideModal}
+                     options={modalOptions} />
+          <Grid fluid>
+              <Row>
+                <Col md={6}>
+                  <h1>Builder</h1>
+                  <SurveyTabs tabs={tabs}
+                              questions={questions}
+                              handleSurveyDelete={handleSurveyDelete}
+                              handleOnSurveyMove={handleSurveyMove}
+                              selectedTab={selectedTab}
+                              addNewTab={handleAddNewTab}
+                              deleteTab={handleDeleteTab}
+                              focusTab={handleFocusTab}
+                              showModal={handleShowModal} />
+                  <AddButton action={addButtonAction}
+                             tab={selectedTab} />
+                </Col>
+                <Col md={6}>
+                  <h1>Preview</h1>
+                  <Preview previewModel={previewModel}
+                           editSurvey={handleShowModal} />
+                </Col>
+              </Row>
+          </Grid>
+        </div>
     )
 }
 

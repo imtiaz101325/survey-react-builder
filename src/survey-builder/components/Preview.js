@@ -8,9 +8,15 @@ const Preview = ({ previewModel, editSurvey }) => {
 
   return (
     <div>
-      <Button bsStyle="primary"
-              onClick={editSurvey}
-              >Options</Button>
+      <Button className="pull-right"
+            bsStyle="primary"
+            bsSize="sm"
+            onClick={
+              () => editSurvey('SURVEY', 'SURVEY')
+            }
+            >Edit Survey Options</Button>
+      <div className="clearfix" />
+      <br />
       <div>
         <Survey model={preview} />
       </div>

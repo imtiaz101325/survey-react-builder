@@ -60,6 +60,15 @@ const SurveyTabs = ({
               >+</Button>
     </div>
     <div>
+    <Button className="pull-right"
+          bsStyle="primary"
+          bsSize="sm"
+          onClick={
+            () => showModal('PAGE', selectedTab)
+          }
+          >Edit Page Options</Button>
+    <div className="clearfix" />
+    <br />
       {
         (questions.length) ?
         questions.map(

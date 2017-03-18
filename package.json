@@ -4,7 +4,7 @@
   "description": "Survey builder application useing Survey.js React and Redux",
   "devDependencies": {
     "@kadira/storybook": "^2.21.0",
-    "react-scripts": "0.8.5"
+    "react-scripts": "^0.9.5"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
