@@ -18,7 +18,14 @@ export const addTab = () => {
     options: {
       name: 'Page Name',
       title: '',
-      navigationButtonsVisibility: 'hiden',
+      navigationButtonsVisibility: {
+        value: 'hide',
+        option: [
+          'iherit',
+          'show',
+          'hide'
+        ],
+      },
       questions: []
     }
   }

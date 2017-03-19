@@ -6,7 +6,7 @@ import './AddButtons.css';
 
 const AddButtons = ({ action, tab }) => (
   <div className='AddButtons'>
-    <Button color='primary' className="btn-circle"
+    <Button color='primary' className="btn-circle" disabled
             >+</Button>
     {
       [
@@ -56,11 +56,7 @@ const AddButtons = ({ action, tab }) => (
 );
 
 AddButtons.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.shape({
-    color: PropTypes.string,
-    name: PropTypes.string,
-    action: PropTypes.func
-  })).isRequired,
+  action: PropTypes.func.isRequired,
   tab: PropTypes.string.isRequired
 }
 

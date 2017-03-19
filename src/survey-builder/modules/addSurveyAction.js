@@ -40,6 +40,7 @@ export default (tabId, surveyId, surveyType) => {
         size: '25',
         startWithNewLine: true,
         title: '',
+        visible: true,
         visibleIf: '',
         width: '',
         validators: [],

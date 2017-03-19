@@ -47,7 +47,7 @@ const EditableSurvey = ({
     pages: [
       {
         questions: [
-          model
+          Object.assign({}, model, { visible: true })
         ]
       }
     ],

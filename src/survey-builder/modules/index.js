@@ -7,3 +7,4 @@ export const DELETE_TAB = 'DELETE_TAB';
 export const FOCUS_TAB = 'FOCUS_TAB';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
+export const SET_VALUE = 'SET_VALUE'; //TODO -- set values in reducers
